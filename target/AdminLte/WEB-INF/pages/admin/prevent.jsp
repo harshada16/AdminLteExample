@@ -9,5 +9,5 @@
 
 response.setHeader("Cache-Control","no-cache,must-revalidate,no-store");
 	if(session.getAttribute("id")==null)
-	response.sendRedirect("loginpage");
+	response.sendRedirect(" ");
 %>
