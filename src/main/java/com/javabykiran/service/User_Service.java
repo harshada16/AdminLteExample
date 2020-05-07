@@ -12,6 +12,7 @@ import com.javabykiran.dao.User_Dao;
 import com.javabykiran.model.StateMaster;
 import com.javabykiran.model.User;
 import com.javabykiran.model.Users;
+import com.javabykiran.model.downloads_list;
 
 
 @Service
@@ -69,6 +70,10 @@ public class User_Service {
 
 	public StateMaster getStateByID(int sid) {
 		return user_Dao.getStateByID(sid);
+	}
+
+	public List<downloads_list> showDownloadlist() {
+		return user_Dao.showDownloadlist();
 	}
 	
 	}
