@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.javabykiran.model.Users;
+import com.javabykiran.model.downloads_list;
 import com.javabykiran.service.User_Service;
 
 @Controller
@@ -46,7 +47,18 @@ public class DashboardController {
 	@RequestMapping(value="/downloads")
 	public ModelAndView downloadpage()
 	{
-		return new ModelAndView("downloads");
+		ModelAndView mv = new ModelAndView();
+		if(userService.showDownloadlist()!=null) {
+			List<downloads_list> l = (List<downloads_list>) userService.showDownloadlist();
+			mv.setViewName("downloads");
+			mv.addObject("data", userService.showDownloadlist());
+		}else {
+			mv.addObject("msg", "List not available");
+			mv.setViewName("downloads");
+		}
+		
+		
+		return mv;
 	}
 	
 	@RequestMapping(value="/links")
