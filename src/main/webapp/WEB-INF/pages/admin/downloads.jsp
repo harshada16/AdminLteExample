@@ -1,6 +1,14 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@page import="com.javabykiran.model.downloads_list"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.io.*" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.Base64" %>
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.util.regex.Pattern"%>
 <%@include file="prevent.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -106,7 +114,9 @@
             <li class="active">Downloads</li>
           </ol>
         </section>
-
+			<%
+				ArrayList<downloads_list> list =(ArrayList<downloads_list>) request.getAttribute("data");
+			%>
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -130,117 +140,94 @@
                       <th>Common</th>
                       <th>Official Source<br><small style="color:red">*For prevoius and latest releases</small></th>
                     </tr>
-                    <tr>
-                      <td>01</td>
-                      <td><img src="<spring:url value="resources/dist/img/jdk.png"/>" alt="JBK Download" style="height: 40px; padding-left: 7px;"></td>  
-                      <td>Java Development Kit <b>(JDK)</b></td>
-                      <td><span class="label label-info">1.8</span></td>
-                      <td><a href="<spring:url value="/resources/downloads/jdk-8u45-windows-i586.exe"/>" download>
-                        <span class="label label-success">32bit</span>
-                      </a></td>
-                      <td><a href="<spring:url value="/resources/downloads/jdk-8u211-windows-x64.exe"/>" download >
-                        <span class="label label-success">64bit</span>
-                      </a></td>
-                      <td></td>
-                      <td><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>
-                    <tr>
-                      <td>02</td>
-                      <td><img src="<spring:url value="/resources/dist/img/selenium.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Selenium Server <b>Standalon</b> Jar </td>
-                      <td><span class="label label-info">2.52.0</span>
-                          <span class="label label-info">3.9.0</span>
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td><a href="<spring:url value="/resources/downloads/selenium-server-standalone-2.52.0.jar"/>" download></a>/
-                        <span class="label label-success">common</span>
-                        <a href="<spring:url value="/resources/downloads/selenium-server-standalone-3.9.0.jar"/>" download></a>
-                        <span class="label label-success">common</span>
-                      </a></td>
-                      <td><a href="http://selenium-release.storage.googleapis.com/index.html" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>
-                    <tr>
-                      <td>03</td>
-                      <td><img src="<spring:url value="/resources/dist/img/selenium.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Selenium Server <b>Source</b> Jar </td>
-                      <td><span class="label label-info">2.46.0</span></td>
-                      <td></td>
-                      <td></td>
-                      <td><a href="<spring:url value="/resources/downloads/selenium-java-2.46.0-srcs.jar"/>" download>
-                        <span class="label label-success">Common</span>
-                      </a></td>
-                      <td><a href="https://seleniumhq.github.io/selenium/docs/api/java/index.html" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>
-                    <tr>
-                      <td>04</td>
-                      <td><img src="<spring:url value="/resources/dist/img/chrome.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Google Chrome </td>
-                      <td><span class="label label-info">76.0</span></td>
-                      <td><a href="<spring:url value="/resources/downloads/GoogleChromeStandaloneEnterprise.exe"/>" download>
-                        <span class="label label-success">32bit</span>
-                      </a></td>
-                      <td><a href="<spring:url value="/resources/downloads/GoogleChromeStandaloneEnterprise64.exe"/>" download>
-                        <span class="label label-success">64bit</span>
-                      </a></td>
-                      <td></td>
-                      <td><a href="https://cloud.google.com/chrome-enterprise/browser/download/" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>  
-                    <tr>
-                      <td>05</td>
-                      <td><img src="<spring:url value="/resources/dist/img/chrome.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Google Chrome Driver</td>
-                      <td><span class="label label-info">76.0</span></td>
-                      <td></td>
-                      <td></td>
-                      <td><a href="<spring:url value="/resources/downloads/chromedriver.exe"/>" download>
-                        <span class="label label-success">Common</span>
-                      </a></td>
-                      <td><a href="https://chromedriver.chromium.org/downloads" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr> 
-                    <tr>
-                      <td>06</td>
-                      <td><img src="<spring:url value="/resources/dist/img/firefox.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Mozilla Firefox</td>
-                      <td><span class="label label-info">69.0</span></td>
-                      <td><a href="<spring:url value="/resources/downloads/Firefox Setup 69.0b14 32bit.exe"/>" download>
-                        <span class="label label-success">32bit</span>
-                      </a></td>
-                      <td><a href="<spring:url value="/resources/downloads/Firefox Setup 69.0b14 64bit.exe"/>" download>
-                        <span class="label label-success">64bit</span>
-                      </a></td>
-                      <td></td>
-                      <td><a href="https://ftp.mozilla.org/pub/firefox/releases/" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>
-                     <tr>
-                      <td>07</td>
-                      <td><img src="<spring:url value="/resources/dist/img/firefox.png"/>" alt="JBK Download" style="height: 40px"></td>  
-                      <td>Gecko Driver for Latest firefox</td>
-                      <td><span class="label label-info">0.24.0</span></td>
-                      <td><a href="<spring:url value="/resources/downloads/geckodriver32bit.exe"/>" download>
-                        <span class="label label-success">32bit</span>
-                      </a></td>
-                      <td><a href="<spring:url value="/resources/downloads/geckodriver64bit.exe"/>" download>
-                        <span class="label label-success">64bit</span>
-                      </a></td>
-                      <td></td>
-                      <td><a href="https://github.com/mozilla/geckodriver/releases" target="_blank">
-                        <span class="label label-warning">Official Website</span>
-                      </a></td>
-                    </tr>    
+                    	  <%
+		int i=0;
+        String[] arrOfVersion = null;
+        String[] arrOfVersion2 = null;
+		for (downloads_list name:list) {
+			i++;
+			byte[]  img = name.getName();
+			String base64Image = Base64.getEncoder().encodeToString(img);
+			
+			 String str = name.getVersion(); 
+			 
+			 String str2 = name.getCommon(); 
+			 
+			 Pattern pattern = Pattern.compile("[a-zA-Z0-9.]*");
+		      Matcher matcher = pattern.matcher(str);
+		      if (!matcher.matches()) {
+		    	  arrOfVersion = str.split(",", 2);
+		      }
+		 
+		      Matcher matcher2 = pattern.matcher(str2);
+		      if (!matcher2.matches()) {
+		    	  arrOfVersion2 = str.split(",", 2);
+		      }
 
+	%>
+                    <tr>
+                      <td><% out.println(name.getId());%></td>
+                      <td><img style="height: 40px;padding-left: 7px;" src="data:image/jpg;base64,<% out.println(base64Image); %>" /></td>
+                        
+                      <td><% out.println(name.getVendor());%></td>
+                      
+                      <% if( arrOfVersion != null && arrOfVersion.length > 0){ %>
+                      <td>
+                      
+                       <span style="margin-right: 3px;" class="label label-info"><% out.println(arrOfVersion[0]);%></span>
+                          <span class="label label-info"><% out.println(arrOfVersion[1]);%></span>
+                       </td>
+                       
+                      <%arrOfVersion=null;}else{ %>
+                      
+                      
+                      <td>
+                       <span class="label label-info"><% out.println(str);%></span>
+                       
+                      </td>
+                      <%} %>
+                      <% if( name.getBit_32().contains("NA") == false ){ %>
+                      <td><a href="../downloads/jdk-8u45-windows-i586.exe" download>
+                        <span class="label label-success"><% out.println(name.getBit_32());%></span>
+                      </a></td>
+                      <%} else {%>
+                      <td></td>
+                      <%} %>
+                      
+                      <% if( name.getBit_64().contains("NA") == false){ %>
+                      <td><a href="../downloads/jdk-8u211-windows-x64.exe" download >
+                        <span class="label label-success"><% out.println(name.getBit_64());%></span>
+                      </a></td>
+                      <%}else{ %>
+                      <td></td>
+                      <%} %>
+                      
+                     
+                      <% if( name.getCommon().contains("NA") == false ){ %>
+                      <% if( arrOfVersion2 != null && arrOfVersion2.length > 0){ %>
+                      <td>
+                      
+                       <span style="margin-right: 3px;" class="label label-success"><% out.println(arrOfVersion2[0]);%></span>
+                          <span class="label label-success"><% out.println(arrOfVersion2[1]);%></span>
+                       </td>
+                       
+                      <%arrOfVersion2=null;}else{ %>
+                      
+                      
+                      <td>
+                       <span class="label label-success"><% out.println(str2);%></span>
+                       
+                      </td>
+                      <%} %>
+                      <%} else{%>
+                      <td></td>
+                      <%} %>
+                      <td><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank">
+                        <span class="label label-warning"><% out.println(name.getOfficialSourrce());%></span>
+                      </a></td>
+                    </tr>
+                    <%} %>
+                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -254,7 +241,11 @@
         <div class="pull-right hidden-xs">
           <b>Design for Selenium Automation Test</b> V 2.3.0
         </div>
-        <strong>Copyright &copy; 2005-2019 <a href="https://www.javabykiran.com/" target="_blank">JavaByKiran</a>.</strong> All rights reserved.
+        <strong>Copyright &copy;  <script>
+            var CurrentYear = new Date().getFullYear()
+            var pastYear = new Date().getFullYear()-1
+            document.write(pastYear+"-"+CurrentYear)
+        </script> <a href="https://www.javabykiran.com/" target="_blank">JavaByKiran</a>.</strong> All rights reserved.
       </footer>
 
       <!-- Control Sidebar -->
@@ -424,42 +415,42 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="<spring:url value="/resources/plugins/jQuery/jQuery-2.1.4.min.js"/>"></script>
+   <!-- jQuery 2.1.4 -->
+    <script src="<spring:url value="/resources/plugins/jQuery/jQuery-2.1.4.min.js" />"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
-      </script>
-      <!-- Bootstrap 3.3.5 -->
-      <script src="<spring:url value="/resources/bootstrap/js/bootstrap.min.js"/>"></script>
-      <!-- Morris.js charts -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-      <script src="<spring:url value="/resources/plugins/morris/morris.min.js"/>"></script>
-      <!-- Sparkline -->
-      <script src="<spring:url value="/resources/plugins/sparkline/jquery.sparkline.min.js"/>"></script>
-      <!-- jvectormap -->
-      <script src="<spring:url value="/resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"/>"></script>
-      <script src="<spring:url value="/resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"/>"></script>
-      <!-- jQuery Knob Chart -->
-      <script src="<spring:url value="/resources/plugins/knob/jquery.knob.js"/>"></script>
-      <!-- daterangepicker -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-      <script src="<spring:url value="/resources/plugins/daterangepicker/daterangepicker.js"/>"></script>
-      <!-- datepicker -->
-      <script src="<spring:url value="/resources/plugins/datepicker/bootstrap-datepicker.js"/>"></script>
-      <!-- Bootstrap WYSIHTML5 -->
-      <script src="<spring:url value="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"/>"></script>
-      <!-- Slimscroll -->
-      <script src="<spring:url value="/resources/plugins/slimScroll/jquery.slimscroll.min.js"/>"></script>
-      <!-- FastClick -->
-      <script src="<spring:url value="/resources/plugins/fastclick/fastclick.min.js"/>"></script>
-      <!-- AdminLTE App -->
-      <script src="<spring:url value="/resources/dist/js/app.min.js"/>"></script>
-      <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-      <script src="<spring:url value="/resources/dist/js/pages/dashboard.js"/>"></script>
-      <!-- AdminLTE for demo purposes -->
-      <script src="<spring:url value="/resources/dist/js/demo.js"/>"></script>
-    </body>
-  </html>
+    </script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="<spring:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
+    <!-- Morris.js charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="<spring:url value="/resources/plugins/morris/morris.min.js" />"></script>
+    <!-- Sparkline -->
+    <script src="<spring:url value="/resources/plugins/sparkline/jquery.sparkline.min.js" />"></script>
+    <!-- jvectormap -->
+    <script src="<spring:url value="/resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" />"></script>
+    <script src="<spring:url value="/resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" />"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="<spring:url value="/resources/plugins/knob/jquery.knob.js" />"></script>
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="<spring:url value="/resources/plugins/daterangepicker/daterangepicker.js" />"></script>
+    <!-- datepicker -->
+    <script src="<spring:url value="/resources/plugins/datepicker/bootstrap-datepicker.js" />"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="<spring:url value="/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" />"></script>
+    <!-- Slimscroll -->
+    <script src="<spring:url value="/resources/plugins/slimScroll/jquery.slimscroll.min.js" />"></script>
+    <!-- FastClick -->
+    <script src="<spring:url value="/resources/plugins/fastclick/fastclick.min.js" />"></script>
+    <!-- AdminLTE App -->
+    <script src="<spring:url value="/resources/dist/js/app.min.js" />"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="<spring:url value="/resources/dist/js/pages/dashboard.js" />"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="<spring:url value="/resources/dist/js/demo.js" />"></script>
+  </body>
+</html>
