@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.javabykiran.model.StateMaster;
 import com.javabykiran.model.User;
 import com.javabykiran.model.Users;
+import com.javabykiran.model.downloads_list;
 
 @Repository
 public class User_Dao {
@@ -84,6 +85,13 @@ public class User_Dao {
 
 	public StateMaster getStateByID(int sid) {
 		return (StateMaster) sf.openSession().get(StateMaster.class,sid);
+	}
+
+	public List<downloads_list> showDownloadlist() {
+		Session session = sf.openSession();
+		List<downloads_list> list=session.createCriteria(downloads_list.class).list();
+		
+		return list;
 	}
 	}
 	
