@@ -23,6 +23,11 @@ public class LoginController {
 	public ModelAndView loginpage() {
 		return new ModelAndView("login");
 	}
+	
+	@RequestMapping(value = "/redirect")
+	public ModelAndView redirct() {
+		return new ModelAndView("login");
+	}
 
 	@RequestMapping(value = "/registerpage")
 	public ModelAndView registerpage() {
